@@ -86,7 +86,7 @@ min_number_of_operators = 1
 max_number_of_operators = 2
 block_sample_size       = 10
 private                 = true
-whitelist               = ["$WALLET_ADDR"]
+whitelist               = ["$WALLET_ADDRES"]
 PRIVATE_TRAP            = true
 EOF
 
