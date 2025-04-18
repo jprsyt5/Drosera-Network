@@ -62,13 +62,11 @@ forge build
 
 echo "🛜 Configuring Network..."
 # Enable firewall
-sudo ufw allow ssh -yq
-sudo ufw allow 22 -yq
-sudo ufw enable -yq
-
-# Allow Drosera ports
-sudo ufw allow 31313/tcp -yq
-sudo ufw allow 31314/tcp -yq
+sudo ufw allow ssh
+sudo ufw allow 22
+sudo ufw allow 31313/tcp
+sudo ufw allow 31314/tcp
+sudo ufw --force enable
 
 echo "📝 Configuring drosera.toml..."
 cat > drosera.toml <<EOF
