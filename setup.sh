@@ -29,7 +29,7 @@ sudo apt-get -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-co
 # Install other packages (OpenSSH won't be touched)
 sudo apt-get install -yq \
   curl ufw iptables build-essential git wget lz4 jq make gcc nano \
-  automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev \
+  automake autoconf tmux htop nvme-cli libgbm1 pkg-config expect libssl-dev \
   libleveldb-dev tar clang bsdmainutils ncdu unzip
 
 echo "🌿 Installing Drosera..."
