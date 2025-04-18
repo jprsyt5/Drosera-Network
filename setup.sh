@@ -14,10 +14,10 @@ echo "ℹ️  Detected VPS IP: $VPS_IP"
 set -e  # Exit on error
 set -o pipefail
 
-export DEBIAN_FRONTEND=noninteractive
-
 echo "🚀 Starting system update..."
-sudo apt-get update -yq && sudo apt-get upgrade -yq
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update -yq
+sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -yq
 
 echo "📦 Installing required packages..."
 sudo apt install -yq \
