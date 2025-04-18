@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 👤 Ask user for GitHub info before using sudo
-read -p "📧 Enter your GitHub Email: " GIT_EMAIL
-read -p "👤 Enter your GitHub Username: " GIT_USERNAME
+read -p "📧 Enter your GitHub Email: " GIT_EMAIL < /dev/tty
+read -p "👤 Enter your GitHub Username: " GIT_USERNAME < /dev/tty
 
 set -e  # Exit on error
 set -o pipefail
