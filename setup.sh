@@ -15,12 +15,19 @@ set -e  # Exit on error
 set -o pipefail
 
 echo "🚀 Starting system update..."
-export DEBIAN_FRONTEND=noninteractive
-sudo apt-get update -yq
-sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade -yq
 
-echo "📦 Installing required packages..."
-sudo apt install -yq \
+# First update package lists
+sudo apt-get update -yq
+
+# Hold OpenSSH to prevent any changes
+sudo apt-mark hold openssh-server
+
+# Set non-interactive mode and force keep existing configs
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" upgrade -yq
+
+# Install other packages (OpenSSH won't be touched)
+sudo apt-get install -yq \
   curl ufw iptables build-essential git wget lz4 jq make gcc nano \
   automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev \
   libleveldb-dev tar clang bsdmainutils ncdu unzip
