@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# 👤 Ask user for GitHub info before using sudo
+read -p "📧 Enter your GitHub Email: " GIT_EMAIL
+read -p "👤 Enter your GitHub Username: " GIT_USERNAME
+
+# ✅ Export so we can preserve them for sudo
+export GIT_EMAIL
+export GIT_USERNAME
+
+# 🔐 Run the actual setup as root, preserving variables
+sudo --preserve-env=GIT_EMAIL,GIT_USERNAME bash <<'EOF'
+
 set -e  # Exit on error
 set -o pipefail
 
