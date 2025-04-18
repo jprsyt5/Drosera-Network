@@ -14,21 +14,13 @@ echo "ℹ️  Detected VPS IP: $VPS_IP"
 set -e  # Exit on error
 set -o pipefail
 
+export DEBIAN_FRONTEND=noninteractive
+
 echo "🚀 Starting system update..."
-sudo apt-get update && sudo apt-get upgrade -y
-
-echo "🛜 Configuring Network..."
-# Enable firewall
-sudo ufw allow ssh
-sudo ufw allow 22
-sudo ufw enable
-
-# Allow Drosera ports
-sudo ufw allow 31313/tcp
-sudo ufw allow 31314/tcp
+sudo apt-get update -yq && sudo apt-get upgrade -yq
 
 echo "📦 Installing required packages..."
-sudo apt install -y \
+sudo apt install -yq \
   curl ufw iptables build-essential git wget lz4 jq make gcc nano \
   automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev \
   libleveldb-dev tar clang bsdmainutils ncdu unzip
@@ -66,6 +58,17 @@ bun install
 
 echo "🛠️ Building project with Forge..."
 forge build
+
+
+echo "🛜 Configuring Network..."
+# Enable firewall
+sudo ufw allow ssh
+sudo ufw allow 22
+sudo ufw enable
+
+# Allow Drosera ports
+sudo ufw allow 31313/tcp
+sudo ufw allow 31314/tcp
 
 echo "📝 Configuring drosera.toml..."
 cat > drosera.toml <<EOF
