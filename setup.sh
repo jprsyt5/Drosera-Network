@@ -100,7 +100,17 @@ EOF
 
 source /root/.bashrc
 
-DROSERA_PRIVATE_KEY=$PRIVATE_KEY drosera apply
+expect <<EOF
+set timeout -1
+spawn DROSERA_PRIVATE_KEY=$PRIVATE_KEY drosera apply
+expect {
+    -ex "Do you want to apply these changes? \\\[ofc/N\\\]:" {
+        send "ofc\r"
+        exp_continue
+    }
+    eof
+}
+EOF
 
 echo "✅ Trap Deployed!"
 
