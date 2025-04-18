@@ -87,7 +87,7 @@ max_number_of_operators = 2
 block_sample_size       = 10
 private                 = true
 whitelist               = ["$WALLET_ADDRESS"]
-PRIVATE_TRAP            = true
+private_trap            = true
 EOF
 
 source /root/.bashrc
@@ -104,20 +104,7 @@ sudo cp drosera-operator /usr/bin
 
 echo "🔑 Registering operator…"
 
-expect <<EOF
-set timeout -1  # Wait indefinitely
-spawn drosera-operator register --eth-rpc-url "$RPC_HOLESKY" --eth-private-key "$PRIVATE_KEY"
-
-# Wait for the block collection to complete and the prompt to appear
-expect "Do you want to apply these changes? \\\[ofc/N\\\]:"  # Note the escaped brackets
-
-# Send the response
-send "ofc\r"
-
-# Wait for command to complete
-expect eof
-EOF
-
+drosera-operator register --eth-rpc-url "$RPC_HOLESKY" --eth-private-key "$PRIVATE_KEY"
 
 
 echo "✅ Operator Succefully registered!"
