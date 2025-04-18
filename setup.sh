@@ -138,5 +138,5 @@ sudo systemctl daemon-reload
 sudo systemctl enable drosera
 sudo systemctl start drosera
 
-echo "🎉 All done — your node + operator are running under systemd."
+echo "🎉 All done — your node + operator are running under systemd.."
 
