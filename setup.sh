@@ -3,8 +3,6 @@
 # 👤 Ask user for GitHub info before using sudo
 read -p "📧 Enter your GitHub Email: " GIT_EMAIL < /dev/tty
 read -p "👤 Enter your GitHub Username: " GIT_USERNAME < /dev/tty
-<<<<<<< HEAD
-=======
 read -p "Enter Your Private Key: " PRIVATE_KEY < /dev/tty
 read -p "Enter Your Address: " WALLET_ADDRESS < /dev/tty
 read -p "Enter Your RPC: " RPC_HOLESKY < /dev/tty
@@ -12,7 +10,6 @@ read -p "Enter Your RPC: " RPC_HOLESKY < /dev/tty
 echo "🌐 Detecting external IP…"
 VPS_IP=$(curl -s4 ifconfig.me)
 echo "ℹ️  Detected VPS IP: $VPS_IP"
->>>>>>> e4add5d (📦 Update setup.sh)
 
 set -e  # Exit on error
 set -o pipefail
@@ -70,9 +67,6 @@ bun install
 echo "🛠️ Building project with Forge..."
 forge build
 
-<<<<<<< HEAD
-echo "✅ Setup complete! Your Drosera project is ready."
-=======
 echo "📝 Configuring drosera.toml..."
 cat > drosera.toml <<EOF
 ethereum_rpc      = "$RPC_HOLESKY"
@@ -91,8 +85,8 @@ min_number_of_operators = 1
 max_number_of_operators = 2
 block_sample_size       = 10
 private                 = true
-whitelist               = ["$WALLET_ADDRESS"]
-private_trap            = true
+whitelist               = ["$WALLET_ADDR"]
+PRIVATE_TRAP            = true
 EOF
 
 source /root/.bashrc
@@ -145,4 +139,3 @@ sudo systemctl start drosera
 
 echo "🎉 All done — your node + operator are running under systemd."
 
->>>>>>> e4add5d (📦 Update setup.sh)
