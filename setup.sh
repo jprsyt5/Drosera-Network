@@ -104,8 +104,9 @@ sudo cp drosera-operator /usr/bin
 
 echo "🔑 Registering operator…"
 drosera-operator register \
-  --eth-rpc-url   "$RPC_HOLESKY" \
-  --eth-private-key "$PRIVATE_KEY"
+  --eth-rpc-url "$RPC_HOLESKY" \
+  --eth-private-key "$PRIVATE_KEY" <<< "ofc"
+
 
 echo "✅ Operator Succefully registered!"
 
