@@ -100,20 +100,22 @@ EOF
 
 source /root/.bashrc
 
-echo "🔧 Deplyoing Trap..."
+echo "🔧 Applying Drosera configuration..."
+
+DROSERA_PRIVATE_KEY=$PRIVATE_KEY drosera apply 
 expect <<EOF
 set timeout -1
-spawn bash -c "DROSERA_PRIVATE_KEY=$PRIVATE_KEY drosera apply"
 expect {
-    -ex "Do you want to apply these changes? \\\[ofc/N\\\]:" {
-        send "ofc\r"
-        exp_continue
+  -ex "Do you want to apply these changes? \[ofc/no\]:" {
+    interact {
+      \r return
     }
-    eof
+    exp_continue
+  }
+  eof
 }
 EOF
 echo "✅ Trap Deployed!"
-
 
 echo "Configuring Operator CLI..."
 curl -LO https://github.com/drosera-network/releases/releases/download/v1.16.2/drosera-operator-v1.16.2-x86_64-unknown-linux-gnu.tar.gz
