@@ -29,4 +29,23 @@ foundryup
 echo "🍞 Installing Bun..."
 curl -fsSL https://bun.sh/install | bash
 
-echo "✅ All done! You may need to restart the terminal or source your .bashrc again."
+echo "📁 Setting up Drosera project..."
+
+# 👤 Ask user for GitHub info
+read -p "📧 Enter your GitHub Email: " GIT_EMAIL
+read -p "👤 Enter your GitHub Username: " GIT_USERNAME
+
+git config --global user.email "$GIT_EMAIL"
+git config --global user.name "$GIT_USERNAME"
+
+mkdir -p Drosera-Network && cd Drosera-Network
+
+forge init -t drosera-network/trap-foundry-template
+
+echo "📦 Installing Node dependencies with Bun..."
+bun install
+
+echo "🛠️ Building project with Forge..."
+forge build
+
+echo "✅ Setup complete! Your Drosera project is ready."
