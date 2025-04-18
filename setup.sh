@@ -4,13 +4,6 @@
 read -p "📧 Enter your GitHub Email: " GIT_EMAIL
 read -p "👤 Enter your GitHub Username: " GIT_USERNAME
 
-# ✅ Export so we can preserve them for sudo
-export GIT_EMAIL
-export GIT_USERNAME
-
-# 🔐 Run the actual setup as root, preserving variables
-sudo --preserve-env=GIT_EMAIL,GIT_USERNAME bash <<'EOF'
-
 set -e  # Exit on error
 set -o pipefail
 
@@ -40,14 +33,12 @@ foundryup
 echo "🍞 Installing Bun..."
 curl -fsSL https://bun.sh/install | bash
 
-echo "📁 Setting up Drosera project..."
-
-# 👤 Ask user for GitHub info
-read -p "📧 Enter your GitHub Email: " GIT_EMAIL
-read -p "👤 Enter your GitHub Username: " GIT_USERNAME
-
+# 🔧 Configure Git
+echo "🔧 Configuring Git..."
 git config --global user.email "$GIT_EMAIL"
 git config --global user.name "$GIT_USERNAME"
+
+echo "📁 Setting up Drosera project..."
 
 mkdir -p Drosera-Network && cd Drosera-Network
 
