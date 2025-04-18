@@ -21,7 +21,7 @@ sudo apt-get update -yq && sudo apt-get upgrade -yq
 
 echo "📦 Installing required packages..."
 sudo apt install -yq \
-  curl ufw iptables build-essential git wget lz4 expect jq make gcc nano \
+  curl ufw iptables build-essential git wget lz4 jq make gcc nano \
   automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev \
   libleveldb-dev tar clang bsdmainutils ncdu unzip
 
@@ -105,15 +105,17 @@ sudo cp drosera-operator /usr/bin
 echo "🔑 Registering operator…"
 
 expect <<EOF
-set timeout 60
+set timeout -1  # Wait indefinitely
 spawn drosera-operator register --eth-rpc-url "$RPC_HOLESKY" --eth-private-key "$PRIVATE_KEY"
-expect {
-    "Do you want to apply these changes? [ofc/N]:" {
-        send "ofc\r"
-        exp_continue
-    }
-    eof
-}
+
+# Wait for the block collection to complete and the prompt to appear
+expect "Do you want to apply these changes? \\\[ofc/N\\\]:"  # Note the escaped brackets
+
+# Send the response
+send "ofc\r"
+
+# Wait for command to complete
+expect eof
 EOF
 
 
