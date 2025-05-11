@@ -79,7 +79,7 @@ sudo ufw --force enable
 echo "📝 Configuring drosera.toml..."
 cat > drosera.toml <<EOF
 ethereum_rpc      = "$RPC_HOLESKY"
-drosera_rpc       = "https://seed-node.testnet.drosera.io"
+drosera_rpc       = "https://relay.testnet.drosera.io"
 eth_chain_id      = 17000
 drosera_address   = "0xea08f7d533C2b9A62F40D5326214f39a8E3A32F8"
 
@@ -118,9 +118,12 @@ EOF
 echo "✅ Trap Deployed!"
 
 echo "Configuring Operator CLI..."
-curl -LO https://github.com/drosera-network/releases/releases/download/v1.16.2/drosera-operator-v1.16.2-x86_64-unknown-linux-gnu.tar.gz
-tar -xvf drosera-operator-v1.16.2-x86_64-unknown-linux-gnu.tar.gz
-sudo cp drosera-operator /usr/bin
+# Get the latest release version
+LATEST_VERSION=$(curl -s https://api.github.com/repos/drosera-network/releases/releases/latest | grep -o '"tag_name": "v[^"]*"' | cut -d'"' -f4)
+echo "📦 Downloading Drosera Operator version: $LATEST_VERSION"
+curl -LO "https://github.com/drosera-network/releases/releases/download/${LATEST_VERSION}/drosera-operator-${LATEST_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+tar -xvf "drosera-operator-${LATEST_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+sudo mv drosera-operator /usr/bin
 
 
 echo "🔑 Registering operator…"
